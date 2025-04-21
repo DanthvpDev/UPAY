@@ -23,7 +23,7 @@ public class Grado_Academico implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int gradoAcademicoId;
 
     @NotEmpty(message = "El grado académico es obligatorio.")
     @Pattern(regexp = "CURS|CERT|DIPL|BACH|LICI|MAES|DOCT", message = "El grado académico solo puede contener letras y números.")

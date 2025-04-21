@@ -52,7 +52,7 @@ public class Permiso implements Serializable {
 
     //* Relación con la entidad Empleado
     @ManyToOne(optional = false)
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "empleadoId", nullable = false)
     @NotNull(message = "Debe seleccionar un empleado.")
     private Empleado empleado;
 }

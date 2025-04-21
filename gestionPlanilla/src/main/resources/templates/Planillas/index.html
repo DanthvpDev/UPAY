@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="Layout/plantilla :: head"></head>
+<body>
+    <header th:replace="Layout/plantilla:: menu"></header>
+    <main>
+        <section class="text-center container mb-4">
+            <h1>Planillas</h1>
+            <h4 class="text-primary">Accedé fácilmente a las últimas planillas generadas, registros del año en curso y resúmenes anuales.</h4>
+        </section>
+        <section th:if="${planillas != null and !planillas.empty}">
+            <article>
+                <div>
+                    <h2>Últimas planillas generadas</h2>
+                    <div class="d-flex justify-content-around">
+                        <div th:each="planilla : ${planillas}" class="card">
+                            <div class="card-title text-center">
+                                <h5 th:text="${planilla.mes}"></h5>
+                            </div>
+                            <div class="card-body">
+                                <div>
+                                    <p>Total:</p>
+                                    <p th:text="${planilla.total}"></p>
+                                </div>
+                                <div>
+                                    <p>Cantidad de Empleados:</p>
+                                    <p th:text="${planilla.cantidadEmpleados}"></p>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <a href="#" class="btn btn-primary">Ver Más</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </section>
+        <section th:if="${planillas == null or planillas.empty}">
+            <div class="alert alert-warning" role="alert">
+                <p>No hay planillas para mostrar 😅</p>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

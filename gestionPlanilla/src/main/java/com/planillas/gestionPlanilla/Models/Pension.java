@@ -46,6 +46,6 @@ public class Pension implements Serializable {
     private String estado;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "empleadoId", nullable = false)
     private Empleado empleado;
 }

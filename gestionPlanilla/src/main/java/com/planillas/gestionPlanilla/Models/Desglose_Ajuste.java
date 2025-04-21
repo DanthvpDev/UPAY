@@ -13,6 +13,10 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+
+@Data
+@Entity
+@Table(name="Desglose_Ajustes")
 public class Desglose_Ajuste implements Serializable {
     private static final long serialVersionUID = 1L;
     
@@ -30,10 +34,10 @@ public class Desglose_Ajuste implements Serializable {
 
     @NotNull
     @ManyToOne(optional = false)
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "detallesPlanillaId", nullable = false)
     private Detalle_Planilla detalle_planilla;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "ajusteSalarialId", nullable = false)
     private Ajuste_Salarial ajuste_salarial;
 }

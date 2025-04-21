@@ -23,7 +23,7 @@ public class Carrera_Profesional implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long carreraProfesionalId;
 
     @NotEmpty(message = "El nombre del título es obligatorio.")
     private String nombre_cert;
@@ -38,13 +38,13 @@ public class Carrera_Profesional implements Serializable {
 
     //* Relación con la entidad Empleado
     @ManyToOne(optional = false)
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "empleadoId", nullable = false)
     @NotNull(message = "Debe seleccionar el empleado")
     private Empleado empleado;
 
     //* Relación con la entidad Grado_Academico
     @ManyToOne(optional = false)
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "gradoAcademicoId", nullable = false)
     @NotNull(message = "Debe seleccionar el grado académico")
     private Grado_Academico grado_academico;
 }

@@ -13,6 +13,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.persistence.Table;
@@ -29,7 +30,7 @@ public class Detalle_Planilla implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long detallesPlanillaId;
 
     @NotNull
     @Min(value = 1)
@@ -63,12 +64,12 @@ public class Detalle_Planilla implements Serializable {
 
     //* Relación con la entidad Empleado
     @ManyToOne(optional = false)
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "empleadoId", nullable = false)
     private Empleado empleado;
 
     //* Relación con la entidad Planilla    
     @ManyToOne(optional = false)
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "planillaId", nullable = false)
     private Planilla planilla;
 
     @OneToMany(mappedBy = "detalle_planilla")

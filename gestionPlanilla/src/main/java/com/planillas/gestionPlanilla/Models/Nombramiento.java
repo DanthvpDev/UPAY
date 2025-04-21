@@ -28,7 +28,7 @@ public class Nombramiento implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long nombramientoId;
 
     @NotNull(message = "La fecha de inicio es obligatoria.")
     @Temporal(TemporalType.DATE)
@@ -50,13 +50,13 @@ public class Nombramiento implements Serializable {
     //* Relación con la entidad Empleados
     @NotNull(message = "Debe seleccionar un empleado.")
     @ManyToOne(optional = false)
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "empleadoId", nullable = false)
     private Empleado empleado;
 
 
     //* Relación con la entidad Puestos
     @NotNull(message = "Debe seleccionar un puesto.")
     @ManyToOne(optional = false)
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "puestoId", nullable = false)
     private Puesto puesto;
 }

@@ -24,7 +24,7 @@ public class Puesto implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int puestoId;
 
     @NotEmpty(message = "El nombre del puesto es obligatorio.")
     private String nombre;

@@ -28,7 +28,7 @@ public class Incapacidad implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long incapacidadId;
 
     @Pattern(regexp = "EMB|ACC|ENF", message = "El tipo de incapacidad solo puede ser por maternidad, accidente o enfermedad.")
     @NotEmpty(message = "Debe ingresar un tipo de incapacidad.")
@@ -45,7 +45,7 @@ public class Incapacidad implements Serializable {
     private Calendar fecha_Fin;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "empleadoId", nullable = false)
     @NotNull(message = "Debe seleccionar un empleado.")
     private Empleado empleado;
 

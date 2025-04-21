@@ -32,7 +32,7 @@ public class Empleado implements Serializable {
         regexp = "^[0-9]{9}$",
         message = "El ID debe contener 9 dígitos numéricos. Utilice 0 en los espacios (10xxx0xxx)"
     )
-    private String id;
+    private String empleadoId;
 
     @Pattern(regexp = "^[A-Za-z]+$", message = "El nombre solo puede contener letras.")
     @NotEmpty(message = "El nombre es obligatorio.")
@@ -71,6 +71,10 @@ public class Empleado implements Serializable {
     //* Relación con la entidad Permisos
     @OneToMany(mappedBy="empleado")
     private List<Permiso> permisos;
+
+    //* Relación con la entidad incapacidad
+    @OneToMany(mappedBy="empleado")
+    private List<Incapacidad> incapacidades;
 
     //* Relación con la entidad Nombramiento
     @OneToMany(mappedBy="empleado")
