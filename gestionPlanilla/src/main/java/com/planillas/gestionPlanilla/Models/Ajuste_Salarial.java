@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Temporal;
@@ -29,6 +30,7 @@ public class Ajuste_Salarial implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Id")
     private long ajusteSalarialId;
 
     @NotNull(message = "El nombre del ajuste es obligatorio.")

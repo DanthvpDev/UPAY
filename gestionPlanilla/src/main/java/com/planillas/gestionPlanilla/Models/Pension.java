@@ -5,7 +5,10 @@ import java.util.Calendar;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -25,8 +28,9 @@ public class Pension implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Min(value = 0, message = "El ID de la pensión debe ser un número positivo.")
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Id")
+    private int pensionId;
 
     @NotNull(message = "Debe ingresar un monto.")
     @Min(value = 1, message = "El monto no puede ser un valor negativo ni 0")

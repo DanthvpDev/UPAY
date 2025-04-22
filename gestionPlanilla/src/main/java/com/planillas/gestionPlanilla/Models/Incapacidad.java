@@ -3,6 +3,7 @@ package com.planillas.gestionPlanilla.Models;
 import java.io.Serializable;
 import java.util.Calendar;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -28,6 +29,7 @@ public class Incapacidad implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Id")
     private long incapacidadId;
 
     @Pattern(regexp = "EMB|ACC|ENF", message = "El tipo de incapacidad solo puede ser por maternidad, accidente o enfermedad.")

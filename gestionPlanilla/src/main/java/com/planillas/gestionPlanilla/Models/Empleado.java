@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -32,6 +33,7 @@ public class Empleado implements Serializable {
         regexp = "^[0-9]{9}$",
         message = "El ID debe contener 9 dígitos numéricos. Utilice 0 en los espacios (10xxx0xxx)"
     )
+    @Column(name = "Id")
     private String empleadoId;
 
     @Pattern(regexp = "^[A-Za-z]+$", message = "El nombre solo puede contener letras.")

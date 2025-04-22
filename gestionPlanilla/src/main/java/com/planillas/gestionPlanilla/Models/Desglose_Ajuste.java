@@ -2,6 +2,7 @@ package com.planillas.gestionPlanilla.Models;
 
 import java.io.Serializable;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Entity;
@@ -22,7 +23,8 @@ public class Desglose_Ajuste implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @Column(name = "Id")
+    private long desgloseAjusteId;
 
     @NotNull
     @Min(value = 1)

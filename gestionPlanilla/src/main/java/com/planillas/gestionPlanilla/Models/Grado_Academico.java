@@ -3,6 +3,7 @@ package com.planillas.gestionPlanilla.Models;
 import java.io.Serializable;
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,6 +24,7 @@ public class Grado_Academico implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Id")
     private int gradoAcademicoId;
 
     @NotEmpty(message = "El grado académico es obligatorio.")

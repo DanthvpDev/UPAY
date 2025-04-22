@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -30,23 +31,33 @@ public class Detalle_Planilla implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Id")
     private long detallesPlanillaId;
 
     @NotNull
-    @Min(value = 1)
+    @Min(value = 0)
     private double primer_pago;
 
     @NotNull
-    @Min(value = 1)
+    @Min(value = 0)
     private double segundo_pago;
 
     @NotNull
-    @Min(value = 1)
+    @Min(value = 0)
     private double salario_neto;
 
     @NotNull
-    @Min(value = 1)
+    @Min(value = 0)
     private double salario_bruto;
+
+    @Min(value = 0)
+    private double pensiones_total;
+    
+    @Min(value = 0)
+    private double subsidio_CCSS;
+
+    @Min(value = 0)
+    private double subsidio_patron;
 
     @NotNull
     @Min(value = 0)

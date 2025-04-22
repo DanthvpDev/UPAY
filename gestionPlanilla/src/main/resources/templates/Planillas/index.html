@@ -4,27 +4,62 @@
 <body>
     <header th:replace="Layout/plantilla:: menu"></header>
     <main>
-        <section class="text-center container mb-4">
-            <h1>Planillas</h1>
-            <h4 class="text-primary">Accedé fácilmente a las últimas planillas generadas, registros del año en curso y resúmenes anuales.</h4>
+        <section class="text-center container d-flex flex-column align-items-center mt-5 mb-5">
+            <h1 class="mb-2 text-dark-purple">Planillas</h1>
+            <h4 class="text-blue fs-4 w-50">Accedé fácilmente a las últimas planillas generadas, registros del año en curso y resúmenes anuales.</h4>
         </section>
-        <section th:if="${planillas != null and !planillas.empty}">
+        <section class="my-5">
+            <article class="container d-flex flex-column align-items-center mb-5">
+                <div class="card p-1">
+                    <div class="card-header">
+                        <h5 class="text-center fs-5">Calcula la planilla de <span class="text-capitalize fs-5" th:text="${mes}"></span></h5>
+                    </div>
+                    <div class="card-body" th:if="${mensajePlanillaActual != null and !mensajePlanillaActual.empty}">
+                        <p th:text="${mensajePlanillaActual}"></p>
+                    </div>
+                    <div class="card-body" th:if="${mensajePlanillaActual == null or !mensajePlanillaActual.empty}">
+                        <div class="card-title text-center">
+                            <h5 th:text="${planillaDelMes.mes}"></h5>
+                        </div>
+                        <div class="card-body">
+                            <div>
+                                <p>Total:</p>
+                                <p th:text="${planillaDelMes.total}"></p>
+                            </div>
+                            <div>
+                                <p>Cantidad de Empleados:</p>
+                                <p th:text="${planillaDelMes.cantidadEmpleados}"></p>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a href="#" class="btn btn-primary">Ver Más</a>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <form method="#" action="#">
+                            <button class="btn">Calcular Planilla</button>
+                        </form>
+                    </div>
+                </div>
+            </article>
+        </section>
+        <section th:if="${planillas != null and !planillas.empty}" class="container mt-5 mb-5">
             <article>
                 <div>
                     <h2>Últimas planillas generadas</h2>
                     <div class="d-flex justify-content-around">
-                        <div th:each="planilla : ${planillas}" class="card">
+                        <div th:each="item : ${planillas}" class="card">
                             <div class="card-title text-center">
-                                <h5 th:text="${planilla.mes}"></h5>
+                                <h5 th:text="${item.mes}"></h5>
                             </div>
                             <div class="card-body">
                                 <div>
                                     <p>Total:</p>
-                                    <p th:text="${planilla.total}"></p>
+                                    <p th:text="${item.total}"></p>
                                 </div>
                                 <div>
                                     <p>Cantidad de Empleados:</p>
-                                    <p th:text="${planilla.cantidadEmpleados}"></p>
+                                    <p th:text="${item.cantidadEmpleados}"></p>
                                 </div>
                             </div>
                             <div class="card-footer">
@@ -35,9 +70,9 @@
                 </div>
             </article>
         </section>
-        <section th:if="${planillas == null or planillas.empty}">
+        <section th:if="${planillas == null or planillas.empty}" class="container mt-3">
             <div class="alert alert-warning" role="alert">
-                <p>No hay planillas para mostrar 😅</p>
+                <p class="fw-bold">No hay planillas para mostrar 😅</p>
             </div>
         </section>
     </main>
