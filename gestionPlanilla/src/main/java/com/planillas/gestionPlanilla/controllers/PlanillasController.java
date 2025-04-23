@@ -21,6 +21,7 @@ public class PlanillasController {
     
     @Autowired
     private IPlanillasService planillasService;
+    private static final System.Logger logger = System.getLogger(PlanillasController.class.getName());
 
     @GetMapping("/")
     public String index(Model model) {
@@ -40,8 +41,9 @@ public class PlanillasController {
             model.addAttribute("mensaje", "No hay planillas para mostrar");
         }
         //* Planilla del mes
+        
         model.addAttribute("planillaDelMes", planillaDelMes);
-
+        // logger.log(System.Logger.Level.INFO, "Planilla del mes: " + planillaDelMes.toString());
 
         if(planillaDelMes == null) {
             //* Obteine el nombre del mes actual y lo agrega al model para mostrarlo

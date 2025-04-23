@@ -26,4 +26,9 @@ public class PlanillasService implements IPlanillasService  {
         return (List<Planilla>) planillaDao.findByFechaCalculoAnio(anio);
     }
 
+    @Override
+    public double calcularPorcentaje(double porcentaje, double salarioBase) {
+        return (porcentaje / 100) * salarioBase;
+    }    
+
 }

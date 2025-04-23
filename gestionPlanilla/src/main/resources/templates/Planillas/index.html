@@ -12,14 +12,14 @@
             <article class="container d-flex flex-column align-items-center mb-5">
                 <div class="card p-1">
                     <div class="card-header">
-                        <h5 class="text-center fs-5">Calcula la planilla de <span class="text-capitalize fs-5" th:text="${mes}"></span></h5>
+                        <h5 class="text-center fs-5 planilla-card-header">Calcula la planilla de <span class="text-capitalize fw-bold fs-5 planilla-card-header" th:text="${mes}"></span></h5>
                     </div>
-                    <div class="card-body" th:if="${mensajePlanillaActual != null and !mensajePlanillaActual.empty}">
+                    <div class="card-body planilla-card-body" th:if="${mensajePlanillaActual != null and !mensajePlanillaActual.empty}">
                         <p th:text="${mensajePlanillaActual}"></p>
                     </div>
-                    <div class="card-body" th:if="${mensajePlanillaActual == null or !mensajePlanillaActual.empty}">
+                    <div class="card-body planilla-card-body" th:if="${planillaDelMes != null and !planillaDelMes.empty}">
                         <div class="card-title text-center">
-                            <h5 th:text="${planillaDelMes.mes}"></h5>
+                            <h5 th:text="${planillaDelMes.fecha_calculo}"></h5>
                         </div>
                         <div class="card-body">
                             <div>
@@ -28,7 +28,7 @@
                             </div>
                             <div>
                                 <p>Cantidad de Empleados:</p>
-                                <p th:text="${planillaDelMes.cantidadEmpleados}"></p>
+                                <p th:text="${planillaDelMes.planilla_id}"></p>
                             </div>
                         </div>
                         <div class="card-footer">
@@ -37,7 +37,11 @@
                     </div>
                     <div class="card-footer">
                         <form method="#" action="#">
-                            <button class="btn">Calcular Planilla</button>
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <button class="btn btn-darkPurple-gradient">Calcular</button>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>

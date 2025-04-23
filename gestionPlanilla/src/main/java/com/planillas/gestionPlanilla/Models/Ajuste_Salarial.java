@@ -47,6 +47,9 @@ public class Ajuste_Salarial implements Serializable {
 
     @NotNull(message = "Debe especificar si es una deducción o un bono.")
     private boolean es_deduccion;
+    
+    @NotNull(message = "Debe especificar si es una deducción o un bono.")
+    private boolean usa_anios;
 
     @NotNull(message = "Debe especificar si es un valor o un porcentaje.")
     private boolean es_valor;

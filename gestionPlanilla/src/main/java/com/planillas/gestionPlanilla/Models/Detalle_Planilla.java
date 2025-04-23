@@ -54,10 +54,10 @@ public class Detalle_Planilla implements Serializable {
     private double pensiones_total;
     
     @Min(value = 0)
-    private double subsidio_CCSS;
-
+    private double subsidio;
+    
     @Min(value = 0)
-    private double subsidio_patron;
+    private double renta_total;
 
     @NotNull
     @Min(value = 0)
@@ -79,6 +79,7 @@ public class Detalle_Planilla implements Serializable {
     private Empleado empleado;
 
     //* Relación con la entidad Planilla    
+    @NotNull
     @ManyToOne(optional = false)
     @JoinColumn(name = "planillaId", nullable = false)
     private Planilla planilla;
