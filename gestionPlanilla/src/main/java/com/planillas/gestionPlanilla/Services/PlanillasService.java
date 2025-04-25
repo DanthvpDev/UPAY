@@ -36,5 +36,4 @@ public class PlanillasService implements IPlanillasService  {
     public PlanillaDTO obtenerInformacionBasicaPlanilla(int mes, int anio) {
         return planillaDao.findByFechaCalculoMesAndAnio(mes, anio);
     }
-
 }
