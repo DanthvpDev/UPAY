@@ -1,52 +1,87 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="Layout/plantilla :: head"></head>
+
 <body>
     <header th:replace="Layout/plantilla:: menu"></header>
     <main>
         <section class="text-center container d-flex flex-column align-items-center mt-5 mb-5">
             <h1 class="mb-2 text-dark-purple">Planillas</h1>
-            <h4 class="text-blue fs-4 w-50">Accedé fácilmente a las últimas planillas generadas, registros del año en curso y resúmenes anuales.</h4>
+            <h4 class="text-blue fs-4 w-50">Accedé fácilmente a las últimas planillas generadas, registros del año en
+                curso y resúmenes anuales.</h4>
         </section>
         <section class="my-5">
             <article class="container d-flex flex-column align-items-center mb-5">
-                <div class="card p-1">
-                    <div class="card-header">
-                        <h5 class="text-center fs-5 planilla-card-header">Calcula la planilla de <span class="text-capitalize fw-bold fs-5 planilla-card-header" th:text="${mes}"></span></h5>
-                    </div>
-                    <div class="card-body planilla-card-body" th:if="${mensajePlanillaActual != null and !mensajePlanillaActual.empty}">
-                        <p th:text="${mensajePlanillaActual}"></p>
-                    </div>
-                    <div class="card-body planilla-card-body" th:if="${planillaDelMes != null and !planillaDelMes.empty}">
-                        <div class="card-title text-center">
-                            <h5 th:text="${planillaDelMes.fecha_calculo}"></h5>
+                <div class="card card-planillaMesActual">
+
+                    <div class="card-header text-center">
+                        
+                        <!-- ? Header si no existe planilla del mes actual-->
+                        <div th:if="${planillaDelMes == null}">
+                            <h5 class="text-center fs-5 planilla-card-header">Calcula la planilla de <span
+                                class="text-capitalize fw-bold fs-5 planilla-card-header" th:text="${mes}"></span></h5>
+
                         </div>
-                        <div class="card-body">
+                        <!-- ? Header si existe la planilla del mes Actual -->
+                        <div th:if="${planillaDelMes != null}">
+                            <h5 class="text-center text-capitalize fs-5 planilla-card-header"
+                                th:text="${planillaDelMes.mes}"></h5>
+                        </div>
+                    </div>
+
+                    
+
+                    <div class="card-body planilla-card-body">
+                        <!-- ? Body si no existe la planilla del mes actual -->
+                        <div th:if="${mensajePlanillaActual != null and !mensajePlanillaActual.empty}">
+                            <p th:text="${mensajePlanillaActual}"></p>
+                        </div>
+
+                        <!-- ? Body si existe la planilla del mes actual -->
+                        <div th:if="${planillaDelMes != null}">
                             <div>
-                                <p>Total:</p>
-                                <p th:text="${planillaDelMes.total}"></p>
-                            </div>
-                            <div>
-                                <p>Cantidad de Empleados:</p>
-                                <p th:text="${planillaDelMes.planilla_id}"></p>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <a href="#" class="btn btn-primary">Ver Más</a>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <form method="#" action="#">
-                            <div class="row">
-                                <div class="col-12 text-center">
-                                    <button class="btn btn-darkPurple-gradient">Calcular</button>
+                                <div class="d-flex">
+                                    <p><strong>Total:</p></strong>
+                                    <p
+                                        th:text="${(planillaDelMes.total_pagos != null) ? planillaDelMes.total_pagos : 0}">
+                                    </p>
+                                </div>
+                                <div class="d-flex">
+                                    <p><strong>Cantidad de Empleados:</strong></p>
+                                    <p
+                                        th:text="${(planillaDelMes.total_empleados != null) ? planillaDelMes.total_empleados : 0}">
+                                    </p>
                                 </div>
                             </div>
-                        </form>
+
+                        </div>
                     </div>
+
+                    <div class="card-footer">
+
+                        <!-- ? Footer si no existe la planilla del mes actual -->
+                        <div th:if="${planillaDelMes == null}">
+                            <form method="#" action="#">
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <button class="btn btn-darkPurple-gradient">Calcular</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- ? Footer si existe la planilla del mes actual -->
+                        <div th:if="${planillaDelMes != null}">
+                            <a href="#" class="btn btn-darkPurple-gradient">Ver Más</a>
+                        </div>
+                    </div>
+
                 </div>
             </article>
         </section>
+
+        <!-- ? Sección que muestra las planillas del año actual -->
         <section th:if="${planillas != null and !planillas.empty}" class="container mt-5 mb-5">
             <article>
                 <div>
@@ -59,11 +94,11 @@
                             <div class="card-body">
                                 <div>
                                     <p>Total:</p>
-                                    <p th:text="${item.total}"></p>
+                                    <p th:text="${item.total_pagos}"></p>
                                 </div>
                                 <div>
                                     <p>Cantidad de Empleados:</p>
-                                    <p th:text="${item.cantidadEmpleados}"></p>
+                                    <p th:text="${item.total_empleados}"></p>
                                 </div>
                             </div>
                             <div class="card-footer">
@@ -81,4 +116,5 @@
         </section>
     </main>
 </body>
+
 </html>

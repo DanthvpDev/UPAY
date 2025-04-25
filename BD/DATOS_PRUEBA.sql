@@ -5,6 +5,15 @@ GO
 
 INSERT INTO EMPLEADOS (ID, NOMBRE, APELLIDO_1, APELLIDO_2, CORREO, TELEFONO, FECHA_NACIMIENTO)
 VALUES
+(
+    '301410001',      -- ID (Cédula simulada: 301410001)
+    'Ana',          -- Nombre
+    'Morales',      -- Primer apellido
+    'Rodríguez', -- Segundo apellido
+    'ana.morales.p34k2@web.net',     -- Correo electrónico generado: ana.morales.p34k2@web.net
+    '52962519',   -- Teléfono generado: 52962519
+    '1994-07-28' -- Fecha de nacimiento generada: 1994-07-28
+),
 ('123456789', 'Juan',   'Pérez',      'Gómez', 'juanerez@example.com',   '22223333', '1980-05-12'),
 ('101230456', 'Andrea', 'Vargas', 'Chaves', 'andrea.vargas@gmail.com', '88887777', '1990-05-15'),
 ('204589123', 'Luis', 'Castro', NULL, 'luis.castro@gmail.com', '88881234', '1985-10-02'),
@@ -20,10 +29,16 @@ VALUES
 ('LICI', 3, 2, 1),
 ('MAES', 4, 2, 1)
 
-select * from GRADOS_ACADEMICOS
 
 INSERT INTO CARRERA_PROFESIONAL (NOMBRE_CERT, NOMBRE_INSTITUCION, ANIO, EMPLEADO_ID, GRADO_ID)
 VALUES
+(
+    'Bachillerato en Administración de Empresas', -- Nombre del certificado/título
+    'Universidad de Costa Rica', -- Nombre de la institución
+    2018,             -- Año de obtención (dentro del rango válido)
+    '301410001',      -- ID del empleado (Ana Morales)
+    3                -- ID del Grado Académico (3 corresponde a 'BACH' - Bachillerato en los datos de prueba)
+),
 ('Certificación en Excel Avanzado', 'INA', 2021, '101230456', 1),
 ('Diplomado en Redes Informáticas', 'Universidad Fidélitas', 2018, '204589123', 2),
 ('Bachillerato en Administración', 'ULACIT', 2017, '302154789', 3),
@@ -43,6 +58,14 @@ VALUES
 
 INSERT INTO NOMBRAMIENTOS (FECHAI_NOMBRAMIENTO, FECHAF_NOMBRAMIENTO, ESTADO, ES_SALARIOGLOBAL, EMPLEADO_ID, PUESTO_ID)
 VALUES 
+(
+    GETDATE() + 1,        -- Fecha de inicio del nombramiento (fecha actual)
+    NULL,              -- Fecha fin del nombramiento (NULL si es indefinido)
+    'ACT',            -- Estado del nombramiento (Activo)
+    1,                -- Es salario global (1 si aplica, 0 si no) - Ajustar según la necesidad
+    '301410001',      -- ID del empleado (Ana Morales)
+    3                -- ID del puesto (Ingeniero de Software, Categoría 2) - Reemplazar si se usa otro puesto Cat 2
+),
 (GETDATE() + 5, NULL, 'ACT', 1, '302154789', 1),
 (GETDATE() + 2, NULL, 'ACT', 0, '108965478', 2),
 (GETDATE() + 1, NULL, 'ACT', 1, '101230456', 1)
@@ -52,10 +75,27 @@ INSERT INTO AJUSTES_SALARIALES
 VALUES 
 ('Escalafón Cat 1', '2025-01-01', NULL, 0, 0, 0, 3, 1, 'ACT'),
 ('Escalafón Cat 2', '2025-01-01', NULL, 0, 0, 0, 1, 2, 'ACT'),
-('Dedicación Exclusiva', '2025-01-01', NULL, 0, 0, 0, 55, NULL, 'ACT'),
-('Carrera Profesional', '2025-01-01', NULL, 0, 1, 0, 3273, NULL, 'ACT')
+('Dedicación Exclusiva', '2025-01-01', NULL, 0, 0, 0, 30, 2, 'ACT'),
+('Carrera Profesional', '2025-01-01', NULL, 0, 1, 0, 3273, 2, 'ACT')
 
-select * from AJUSTES_SALARIALES
+select E.NOMBRE, NOMBRE_CERT, GA.CATEGORIA AS CATEGORIA_GRADO, P.CATEGORIA AS CATEGORIA_PUESTO, FECHAI_NOMBRAMIENTO, GRADO, ES_SALARIOGLOBAL, SALARIO_GLOBAL, E.ID
+from CARRERA_PROFESIONAL CP
+INNER JOIN EMPLEADOS E 
+ON CP.EMPLEADO_ID = E.ID
+INNER JOIN GRADOS_ACADEMICOS GA
+ON CP.GRADO_ID = GA.ID
+INNER JOIN NOMBRAMIENTOS N
+ON E.ID = N.EMPLEADO_ID
+INNER JOIN PUESTOS P 
+ON N.PUESTO_ID = P.ID
+WHERE E.NOMBRE = 'ANA'
 
-DELETE FROM AJUSTES_SALARIALES
-DBCC CHECKIDENT('AJUSTES_SALARIALES', RESEED, 0)
+INSERT INTO DETALLES_PLANILLA(PRIMER_PAGO, SEGUNDO_PAGO, SALARIO, SALARIO_BRUTO, SALARIO_NETO, DIAS_TRABAJADOS, RENTA_TOTAL, FECHA_PAGO1, FECHA_PAGO2, PLANILLA_ID, EMPLEADO_ID)
+VALUES 
+(1,1,0,1,0,20,20000, '20250412', '20250428', 1, '301410001')
+
+SELECT P.ID, MONTH(FECHA_CALCULO) AS MES, YEAR(FECHA_CALCULO) AS ANIO, SUM(DP.SALARIO_NETO) AS TOTAL_PAGOS, COUNT(E.ID) AS TOTAL_EMPLEADOS
+FROM PLANILLAS P
+INNER JOIN DETALLES_PLANILLA DP ON P.ID = DP.PLANILLA_ID INNER JOIN EMPLEADOS E ON DP.EMPLEADO_ID = E.ID
+WHERE MONTH(FECHA_CALCULO) = 4 AND YEAR(FECHA_CALCULO) = 2025
+GROUP BY P.ID, MONTH(FECHA_CALCULO), YEAR(FECHA_CALCULO) 

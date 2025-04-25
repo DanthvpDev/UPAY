@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.planillas.gestionPlanilla.DTO.PlanillaDTO;
 import com.planillas.gestionPlanilla.Models.Planilla;
 import com.planillas.gestionPlanilla.Services.IPlanillasService;
 
@@ -25,13 +26,12 @@ public class PlanillasController {
 
     @GetMapping("/")
     public String index(Model model) {
-        // TODO: Crear DTO que obtenga la información necesaria para mostrar las tarjetas de la planilla;
-        // TODO: Se deben cambiar todas las listas que tengan tipo Planilla y se debe cambiar el DAO, la Interface del Servicio y el Servicio;
+
         LocalDate fecha = LocalDate.now();
         //? Obtiene las planillas del año actual para mostrar los totales
-        List<Planilla> planillas = planillasService.obtenerPlanillaPorAnio(fecha.getYear());
+        List<PlanillaDTO> planillas = planillasService.obtenerPlanillaPorAnio(fecha.getYear());
         //? Obtiene la planilla del mes actual
-        Planilla planillaDelMes = planillasService.obtenerPlanillaPorMesAnio(fecha);
+        PlanillaDTO planillaDelMes = planillasService.obtenerInformacionBasicaPlanilla(fecha.getMonthValue(), fecha.getYear());
         String mensajePlanillaActual;
 
         //* Planillas del año
@@ -42,15 +42,14 @@ public class PlanillasController {
         }
         //* Planilla del mes
         
-        model.addAttribute("planillaDelMes", planillaDelMes);
         // logger.log(System.Logger.Level.INFO, "Planilla del mes: " + planillaDelMes.toString());
-
+        model.addAttribute("planillaDelMes", planillaDelMes);
+        
         if(planillaDelMes == null) {
             //* Obteine el nombre del mes actual y lo agrega al model para mostrarlo
             Month mesActual = fecha.getMonth();
             String nombreMesActual = mesActual.getDisplayName(TextStyle.FULL, Locale.of("es", "ES"));
             model.addAttribute("mes", nombreMesActual);
-
             mensajePlanillaActual = "No se ha calculado la planilla de este mes. ¿Desea calcularla?";
             model.addAttribute("mensajePlanillaActual", mensajePlanillaActual);
         }

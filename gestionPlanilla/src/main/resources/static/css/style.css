@@ -74,3 +74,11 @@ h6 {
 .planilla-card-header {
     color:var(--dark-purple);
 }
+
+.card {
+    width: 33%;
+}
+
+.card-planillaMesActual {
+    width: 40%;
+}
