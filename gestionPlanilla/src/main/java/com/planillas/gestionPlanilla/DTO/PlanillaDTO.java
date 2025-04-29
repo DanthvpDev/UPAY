@@ -20,6 +20,7 @@ public class PlanillaDTO {
         this.total_pagos = total_pagos;
         this.total_empleados = total_empleados;
     }
+    
     public PlanillaDTO() {
     }
 

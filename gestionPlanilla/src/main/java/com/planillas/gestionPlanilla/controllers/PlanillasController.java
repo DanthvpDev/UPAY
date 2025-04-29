@@ -9,19 +9,33 @@ import java.time.format.TextStyle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.planillas.gestionPlanilla.DTO.IncapacidadDTO;
 import com.planillas.gestionPlanilla.DTO.PlanillaDTO;
 import com.planillas.gestionPlanilla.Models.Planilla;
+import com.planillas.gestionPlanilla.Services.IDetalles_PlanillaService;
+import com.planillas.gestionPlanilla.Services.IIncapacidadService;
 import com.planillas.gestionPlanilla.Services.IPlanillasService;
+
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/planillas")
 public class PlanillasController {
     
     @Autowired
+    private IDetalles_PlanillaService detallesPlanillaService;
+    
+    @Autowired
     private IPlanillasService planillasService;
+
+    @Autowired
+    private IIncapacidadService incapacidadService;
+
     private static final System.Logger logger = System.getLogger(PlanillasController.class.getName());
 
     @GetMapping("/")
@@ -58,5 +72,26 @@ public class PlanillasController {
         }
 
         return "Planillas/index";
+    }
+
+    @GetMapping("/calcularPlanilla")
+    public String formularioPlanilla(Planilla planilla) {    
+        if(planilla.getFecha_calculo() == null) {
+            planilla.setFecha_calculo(LocalDate.now());
+        } 
+        return "Planillas/calculoPlanillas";
+    }
+
+    @PostMapping("/calcularPlanilla")
+    public String calcularPlanilla(@Valid Planilla planilla, Errors errores, Model model){
+        if(errores.hasErrors()){
+            return "Planillas/calculoPlanillas";
+        }
+        planillasService.calcularPlanilla(planilla);
+        Planilla planillaGuardada = planillasService.obtenerPlanillaPorFechaCalculo(planilla.getFecha_calculo());
+        detallesPlanillaService.guardarDetallesPlanilla(planillaGuardada);
+        logger.log(System.Logger.Level.INFO, "Planilla guardada: " + planillaGuardada);
+        model.addAttribute("mensaje", "Planilla calculada con éxito");
+        return "redirect:/planillas/";
     }
 }

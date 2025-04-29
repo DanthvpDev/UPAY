@@ -66,6 +66,6 @@ public class Ajuste_Salarial implements Serializable {
     @Pattern(regexp = "ACT|INA", message = "El estado del ajuste solo puede ser activo o inactivo.")
     private String estado;
     
-    @OneToMany(mappedBy = "detalle_planilla")
+    @OneToMany(mappedBy = "ajuste_salarial")
     private List<Desglose_Ajuste> desglose_ajustes;
 }

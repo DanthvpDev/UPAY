@@ -8,6 +8,7 @@
     --purple: #855CD7;
     --blue: #004782;
     --black: #1d1d1d;
+    --turquoise: #5ea5df;
 }
 
 * {
@@ -43,7 +44,23 @@ h6 {
 
 .btn-darkPurple-gradient {
     background: rgba(112, 180, 235, 1); /* O el color que tenga el botón normalmente */
-    background-image: linear-gradient(to top, rgba(47, 23, 96, 0.88) 50%, rgb(94, 165, 223) 100%);
+    background-image: linear-gradient(to top, var(--dark-purple) 50%, var(--turquoise) 100%);
+    background-size: 100% 200%; 
+    background-position: 100% 0%; 
+    transition: background-position 0.5s ease; 
+    color: inherit; 
+    overflow: hidden; 
+    position: relative; 
+    z-index: 1; 
+    color: #FEF6FF;
+    border: none;
+    font-weight: semibold;
+    font-family: var(--font-poppins);
+}
+
+.btn-purple-gradient {
+    background: rgba(112, 180, 235, 1); /* O el color que tenga el botón normalmente */
+    background-image: linear-gradient(to top, var(--turquoise) 50%, var(--purple) 100%);
     background-size: 100% 200%; 
     background-position: 100% 0%; 
     transition: background-position 0.5s ease; 
@@ -58,7 +75,7 @@ h6 {
 }
 
 
-.btn-darkPurple-gradient:hover {
+.btn-gradient-hover:hover {
     background-position: 100% 100%; 
     color: #FEF6FF; 
 }

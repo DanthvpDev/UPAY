@@ -1,7 +1,8 @@
 package com.planillas.gestionPlanilla.Models;
 
 import java.io.Serializable;
-import java.util.Calendar;
+import java.time.LocalDate;
+
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,7 +22,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
-@Data
+
 @Entity
 @Table(name="Incapacidades")
 public class Incapacidad implements Serializable {
@@ -39,16 +40,58 @@ public class Incapacidad implements Serializable {
     @NotNull(message = "La fecha de inicio es obligatoria.")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Calendar fecha_Inicio;
+    private LocalDate fecha_Inicio;
 
     @NotNull(message = "La fecha de fin es obligatoria.")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Calendar fecha_Fin;
+    private LocalDate fecha_Fin;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "empleadoId", nullable = false)
     @NotNull(message = "Debe seleccionar un empleado.")
     private Empleado empleado;
+
+    public long getIncapacidadId() {
+        return incapacidadId;
+    }
+
+    public void setIncapacidadId(long incapacidadId) {
+        this.incapacidadId = incapacidadId;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public LocalDate getFecha_Inicio() {
+        return fecha_Inicio;
+    }
+
+    public void setFecha_Inicio(LocalDate fecha_Inicio) {
+        this.fecha_Inicio = fecha_Inicio;
+    }
+
+    public LocalDate getFecha_Fin() {
+        return fecha_Fin;
+    }
+
+    public void setFecha_Fin(LocalDate fecha_Fin) {
+        this.fecha_Fin = fecha_Fin;
+    }
+
+    public Empleado getEmpleado() {
+        return empleado;
+    }
+
+    public void setEmpleado(Empleado empleado) {
+        this.empleado = empleado;
+    }
+
+    
 
 }

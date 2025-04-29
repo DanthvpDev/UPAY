@@ -1,7 +1,8 @@
 package com.planillas.gestionPlanilla.Models;
 
 import java.io.Serializable;
-import java.util.Calendar;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -11,8 +12,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -42,9 +41,11 @@ public class Empleado implements Serializable {
 
     @Pattern(regexp = "^[A-Za-z]+$", message = "El apellido solo puede contener letras.")
     @NotEmpty(message = "El primer apellido es obligatorio.")
+    @Column(name = "apellido_1")
     private String apellido1;
 
     @Pattern(regexp = "^[A-Za-z]+$",message = "El apellido solo puede contener letras.")
+    @Column(name = "apellido_2")
     private String apellido2;
 
     @NotBlank(message = "El correo es obligatorio.")
@@ -56,9 +57,8 @@ public class Empleado implements Serializable {
     private String telefono;
 
     @NotNull(message = "La fecha de nacimiento es obligatoria.")
-    @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Calendar fecha_Nacimiento;
+    private LocalDate fecha_Nacimiento;
 
     private boolean borrado;
 
@@ -84,5 +84,25 @@ public class Empleado implements Serializable {
 
     @OneToMany(mappedBy="empleado")
     private List<Detalle_Planilla> detalles_planilla;
+
+
+    public Empleado() {
+        this.borrado = false;
+    }
+
+    public Empleado(String id) {
+        this.empleadoId = id;
+    }
+
+    public Empleado(String id, String nombre, String apellido1, String apellido2, String correo, String telefono, Date fecha_Nacimiento, boolean borrado) {
+        this.empleadoId = id;
+        this.nombre = nombre;
+        this.apellido1 = apellido1;
+        this.apellido2 = apellido2;
+        this.correo = correo;
+        this.telefono = telefono;
+        this.fecha_Nacimiento = fecha_Nacimiento.toLocalDate();
+        this.borrado = borrado;
+    }
 
 }

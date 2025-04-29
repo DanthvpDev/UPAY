@@ -5,6 +5,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+
 
 import com.planillas.gestionPlanilla.DAO.IPlanillaDao;
 import com.planillas.gestionPlanilla.DTO.PlanillaDTO;
@@ -18,7 +21,7 @@ public class PlanillasService implements IPlanillasService  {
     private IPlanillaDao planillaDao;
 
     @Override
-    public Planilla obtenerPlanillaPorMesAnio(LocalDate fechaCalculo) {
+    public Planilla obtenerPlanillaPorFechaCalculo(LocalDate fechaCalculo) {
         return  planillaDao.findByFechaCalculo(fechaCalculo);
     }
 
@@ -35,5 +38,20 @@ public class PlanillasService implements IPlanillasService  {
     @Override
     public PlanillaDTO obtenerInformacionBasicaPlanilla(int mes, int anio) {
         return planillaDao.findByFechaCalculoMesAndAnio(mes, anio);
+    }
+
+    @Override
+    public Planilla obtenerPlanillaPorId(long id){
+        return planillaDao.findByPlanillaId(id);
+    }
+
+    @Override 
+    @Transactional
+    public void calcularPlanilla(Planilla planilla){
+        try {
+            planillaDao.save(planilla);
+        } catch (Exception e) {
+            throw e;
+        }
     }
 }
