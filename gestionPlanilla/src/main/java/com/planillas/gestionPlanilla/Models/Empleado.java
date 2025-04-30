@@ -4,11 +4,13 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -79,7 +81,7 @@ public class Empleado implements Serializable {
     private List<Incapacidad> incapacidades;
 
     //* Relación con la entidad Nombramiento
-    @OneToMany(mappedBy="empleado")
+    @OneToMany(mappedBy="empleado", fetch = FetchType.EAGER)
     private List<Nombramiento> nombramientos;
 
     @OneToMany(mappedBy="empleado")
@@ -104,5 +106,127 @@ public class Empleado implements Serializable {
         this.fecha_Nacimiento = fecha_Nacimiento.toLocalDate();
         this.borrado = borrado;
     }
+
+    public Optional<Nombramiento> getNombramientoActual() {
+        LocalDate fechaActual = LocalDate.now();
+        return nombramientos.stream()
+                .filter(nombramiento -> nombramiento.getEstado().equals("ACT") 
+                        && fechaActual.isAfter(nombramiento.getFecha_inicio()) 
+                        && (nombramiento.getFecha_fin() == null || fechaActual.isBefore(nombramiento.getFecha_fin())))
+                .findFirst();
+    }
+
+    public String getEmpleadoId() {
+        return empleadoId;
+    }
+
+    public void setEmpleadoId(String empleadoId) {
+        this.empleadoId = empleadoId;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido1() {
+        return apellido1;
+    }
+
+    public void setApellido1(String apellido1) {
+        this.apellido1 = apellido1;
+    }
+
+    public String getApellido2() {
+        return apellido2;
+    }
+
+    public void setApellido2(String apellido2) {
+        this.apellido2 = apellido2;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public LocalDate getFecha_Nacimiento() {
+        return fecha_Nacimiento;
+    }
+
+    public void setFecha_Nacimiento(LocalDate fecha_Nacimiento) {
+        this.fecha_Nacimiento = fecha_Nacimiento;
+    }
+
+    public boolean isBorrado() {
+        return borrado;
+    }
+
+    public void setBorrado(boolean borrado) {
+        this.borrado = borrado;
+    }
+
+    public List<Carrera_Profesional> getTitulos() {
+        return titulos;
+    }
+
+    public void setTitulos(List<Carrera_Profesional> titulos) {
+        this.titulos = titulos;
+    }
+
+    public List<Pension> getPensiones() {
+        return pensiones;
+    }
+
+    public void setPensiones(List<Pension> pensiones) {
+        this.pensiones = pensiones;
+    }
+
+    public List<Permiso> getPermisos() {
+        return permisos;
+    }
+
+    public void setPermisos(List<Permiso> permisos) {
+        this.permisos = permisos;
+    }
+
+    public List<Incapacidad> getIncapacidades() {
+        return incapacidades;
+    }
+
+    public void setIncapacidades(List<Incapacidad> incapacidades) {
+        this.incapacidades = incapacidades;
+    }
+
+    public List<Nombramiento> getNombramientos() {
+        return nombramientos;
+    }
+
+    public void setNombramientos(List<Nombramiento> nombramientos) {
+        this.nombramientos = nombramientos;
+    }
+
+    public List<Detalle_Planilla> getDetalles_planilla() {
+        return detalles_planilla;
+    }
+
+    public void setDetalles_planilla(List<Detalle_Planilla> detalles_planilla) {
+        this.detalles_planilla = detalles_planilla;
+    }
+
 
 }

@@ -15,8 +15,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -94,8 +92,21 @@ public class Detalle_Planilla implements Serializable {
         this.primer_pago = 1;
         this.segundo_pago = 1;
         this.salario = 1;
-        this.salario_neto = 1;
-        this.salario_bruto = 1;
+        this.salario_neto = 0;
+        this.salario_bruto = 2;
+        this.renta_total = 1;
+        this.fecha_pago1 = LocalDate.now();
+        this.fecha_pago2 = LocalDate.now();
+    }
+
+    public Detalle_Planilla(Empleado empleado, Planilla planilla) {
+        this.planilla = planilla;
+        this.empleado = empleado;
+        this.primer_pago = 1;
+        this.segundo_pago = 1;
+        this.salario = 1;
+        this.salario_neto = 0;
+        this.salario_bruto = 2;
         this.renta_total = 1;
         this.fecha_pago1 = LocalDate.now();
         this.fecha_pago2 = LocalDate.now();
@@ -114,16 +125,16 @@ public class Detalle_Planilla implements Serializable {
         return primer_pago;
     }
 
-    public void setPrimer_pago(double primer_pago) {
-        this.primer_pago = primer_pago;
+    public void setPrimer_pago(double salarioNeto) {
+        this.primer_pago = salarioNeto * 0.6;
     }
 
     public double getSegundo_pago() {
         return segundo_pago;
     }
 
-    public void setSegundo_pago(double segundo_pago) {
-        this.segundo_pago = segundo_pago;
+    public void setSegundo_pago(double salarioNeto) {
+        this.segundo_pago = salarioNeto * 0.4;
     }
 
     public double getSalario_neto() {
@@ -189,6 +200,15 @@ public class Detalle_Planilla implements Serializable {
     public void setFecha_pago2(LocalDate fecha_pago2) {
         this.fecha_pago2 = fecha_pago2;
     }
+
+    public double getSalario() {
+        return salario;
+    }
+
+    public void setSalario(double salario) {
+        this.salario = salario;
+    }
+
 
 
 }

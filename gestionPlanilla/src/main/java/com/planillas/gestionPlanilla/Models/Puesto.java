@@ -51,6 +51,64 @@ public class Puesto implements Serializable {
     //* Relación con la entidad Nombramientos
     @OneToMany(mappedBy = "puesto")
     private List<Nombramiento> nombramientos;
+
+    public int getPuestoId() {
+        return puestoId;
+    }
+
+    public void setPuestoId(int puestoId) {
+        this.puestoId = puestoId;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public double getSalario_base() {
+        return salario_base;
+    }
+
+    public void setSalario_base(double salario_base) {
+        this.salario_base = salario_base;
+    }
+
+    public double getSalario_global() {
+        return salario_global;
+    }
+
+    public void setSalario_global(double salario_global) {
+        this.salario_global = salario_global;
+    }
+
+    public int getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(int categoria) {
+        this.categoria = categoria;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public List<Nombramiento> getNombramientos() {
+        return nombramientos;
+    }
+
+    public void setNombramientos(List<Nombramiento> nombramientos) {
+        this.nombramientos = nombramientos;
+    }
+    
+
     
 
 }

@@ -72,4 +72,122 @@ public class DetalleDto {
         this.fecha_pago2 = LocalDate.now();
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public String getNombreEmpleado() {
+        return nombreEmpleado;
+    }
+
+    public void setNombreEmpleado(String nombreEmpleado) {
+        this.nombreEmpleado = nombreEmpleado;
+    }
+
+    public double getPrimer_pago() {
+        return primer_pago;
+    }
+
+    public void setPrimer_pago(double primer_pago) {
+        this.primer_pago = primer_pago;
+    }
+
+    public double getSegundo_pago() {
+        return segundo_pago;
+    }
+
+    public void setSegundo_pago(double segundo_pago) {
+        this.segundo_pago = segundo_pago;
+    }
+
+    public double getSalario() {
+        return salario;
+    }
+
+    public void setSalario(double salario) {
+        this.salario = salario;
+    }
+
+    public double getSalario_neto() {
+        return salario_neto;
+    }
+
+    public void setSalario_neto(double salario_neto) {
+        this.salario_neto = salario_neto;
+    }
+
+    public double getSalario_bruto() {
+        return salario_bruto;
+    }
+
+    public void setSalario_bruto(double salario_bruto) {
+        this.salario_bruto = salario_bruto;
+    }
+
+    public double getPensiones_total() {
+        return pensiones_total;
+    }
+
+    public void setPensiones_total(double pensiones_total) {
+        this.pensiones_total = pensiones_total;
+    }
+
+    public double getSubsidio() {
+        return subsidio;
+    }
+
+    public void setSubsidio(double subsidio) {
+        this.subsidio = subsidio;
+    }
+
+    public double getRenta_total() {
+        return renta_total;
+    }
+
+    public void setRenta_total(double renta_total) {
+        this.renta_total = renta_total;
+    }
+
+    public int getDias_trabajados() {
+        return dias_trabajados;
+    }
+
+    public void setDias_trabajados(int dias_trabajados) {
+        this.dias_trabajados = dias_trabajados;
+    }
+
+    public LocalDate getFecha_pago1() {
+        return fecha_pago1;
+    }
+
+    public void setFecha_pago1(LocalDate fecha_pago1) {
+        this.fecha_pago1 = fecha_pago1;
+    }
+
+    public LocalDate getFecha_pago2() {
+        return fecha_pago2;
+    }
+
+    public void setFecha_pago2(LocalDate fecha_pago2) {
+        this.fecha_pago2 = fecha_pago2;
+    }
+
+    public String getEmpleadoId() {
+        return empleadoId;
+    }
+
+    public void setEmpleadoId(String empleadoId) {
+        this.empleadoId = empleadoId;
+    }
+
+    public long getPlanillaId() {
+        return planillaId;
+    }
+
+    public void setPlanillaId(long planillaId) {
+        this.planillaId = planillaId;
+    }
+
+
+
 }
