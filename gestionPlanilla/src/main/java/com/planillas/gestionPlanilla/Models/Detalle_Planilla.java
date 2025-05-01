@@ -2,6 +2,7 @@ package com.planillas.gestionPlanilla.Models;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.GeneratedValue;
@@ -82,7 +83,7 @@ public class Detalle_Planilla implements Serializable {
     private Planilla planilla;
 
     @OneToMany(mappedBy = "detalle_planilla")
-    private List<Desglose_Ajuste> desglose_ajustes;
+    private List<Desglose_Ajuste> desglose_ajustes = new ArrayList<Desglose_Ajuste>();
 
 
     public Detalle_Planilla(Empleado empleado, Planilla planilla, int dias_trabajados) {
@@ -207,6 +208,14 @@ public class Detalle_Planilla implements Serializable {
 
     public void setSalario(double salario) {
         this.salario = salario;
+    }
+
+    public List<Desglose_Ajuste> getDesglose_ajustes() {
+        return desglose_ajustes;
+    }
+
+    public void setDesglose_ajustes(Desglose_Ajuste desglose_ajustes) {
+        this.desglose_ajustes.add(desglose_ajustes);
     }
 
 

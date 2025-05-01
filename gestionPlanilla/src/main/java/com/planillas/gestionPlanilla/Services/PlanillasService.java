@@ -20,6 +20,9 @@ public class PlanillasService implements IPlanillasService  {
     @Autowired
     private IPlanillaDao planillaDao;
 
+    @Autowired 
+    private IDetalles_PlanillaService detallesPlanillaService;
+
     @Override
     public Planilla obtenerPlanillaPorFechaCalculo(LocalDate fechaCalculo) {
         return  planillaDao.findByFechaCalculo(fechaCalculo);
@@ -28,12 +31,7 @@ public class PlanillasService implements IPlanillasService  {
     @Override
     public List<PlanillaDTO> obtenerPlanillaPorAnio(int anio) {
         return (List<PlanillaDTO>) planillaDao.findByFechaCalculoAnio(anio);
-    }
-
-    @Override
-    public double calcularPorcentaje(double porcentaje, double salarioBase) {
-        return (porcentaje / 100) * salarioBase;
-    }    
+    }   
 
     @Override
     public PlanillaDTO obtenerInformacionBasicaPlanilla(int mes, int anio) {
@@ -47,9 +45,13 @@ public class PlanillasService implements IPlanillasService  {
 
     @Override 
     @Transactional
-    public void calcularPlanilla(Planilla planilla){
+    public Planilla calcularPlanilla(Planilla planilla){
         try {
-            planillaDao.save(planilla);
+            Planilla planillaGuardada = planillaDao.save(planilla);
+            if(planillaGuardada != null) {
+                detallesPlanillaService.guardarDetallesPlanilla(planillaGuardada);
+            }
+            return planillaGuardada;
         } catch (Exception e) {
             throw e;
         }

@@ -8,5 +8,5 @@ import com.planillas.gestionPlanilla.DTO.IncapacidadDTO;
 
 public interface IIncapacidadService {
     public List<IncapacidadDTO> obtenerIncapacidadesPorMesActual(LocalDate mesAnterior);
-    public int calcularDiasIncapacidad(List<IncapacidadDTO> incapacidades, LocalDate fechaHoy);
+    public double calcularSubsidio(int diasIncapacidad, double salarioBase, int dfltDiasTrabajados);
 }

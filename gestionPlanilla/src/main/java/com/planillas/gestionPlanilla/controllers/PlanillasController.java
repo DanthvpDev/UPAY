@@ -87,10 +87,11 @@ public class PlanillasController {
         if(errores.hasErrors()){
             return "Planillas/calculoPlanillas";
         }
-        planillasService.calcularPlanilla(planilla);
-        Planilla planillaGuardada = planillasService.obtenerPlanillaPorFechaCalculo(planilla.getFecha_calculo());
-        detallesPlanillaService.guardarDetallesPlanilla(planillaGuardada);
-        logger.log(System.Logger.Level.INFO, "Planilla guardada: " + planillaGuardada);
+        Planilla planilaCalculada = planillasService.calcularPlanilla(planilla);
+        if(planilaCalculada == null) {
+            model.addAttribute("mensaje", "Error al calcular la planilla");
+            return "redirect:/planillas/";
+        }
         model.addAttribute("mensaje", "Planilla calculada con éxito");
         return "redirect:/planillas/";
     }

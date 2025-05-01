@@ -5,14 +5,16 @@
 
 package com.planillas.gestionPlanilla.Services;
 
-import com.planillas.gestionPlanilla.Models.Planilla;
+import java.util.List;
+
+import com.planillas.gestionPlanilla.Models.Ajuste_Salarial;
 
 /**
  *
- * 
- * 
  * @author danth
  */
-public interface IDetalles_PlanillaService {
-    public int guardarDetallesPlanilla(Planilla planilla);
+public interface IAjustesService {
+    public List<Ajuste_Salarial> obtenerAjustesSalariales();
+    public double calcularPorcentaje(double valor, double salarioBase);
+    
 }
