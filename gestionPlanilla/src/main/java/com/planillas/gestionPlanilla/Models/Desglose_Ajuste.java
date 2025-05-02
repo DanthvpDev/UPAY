@@ -33,11 +33,11 @@ public class Desglose_Ajuste implements Serializable {
 
     @NotNull
     @ManyToOne(optional = false)
-    @JoinColumn(name = "detallesPlanillaId", nullable = false)
+    @JoinColumn(name = "detalle_Id", nullable = false)
     private Detalle_Planilla detalle_planilla;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "ajusteSalarialId", nullable = false)
+    @JoinColumn(name = "ajuste_id", nullable = false)
     private Ajuste_Salarial ajuste_salarial;
 
     public Desglose_Ajuste(Ajuste_Salarial ajuste_salarial, long desgloseAjusteId, Detalle_Planilla detalle_planilla, double monto, String observaciones) {

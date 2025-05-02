@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -82,7 +83,7 @@ public class Detalle_Planilla implements Serializable {
     @JoinColumn(name = "planillaId", nullable = false)
     private Planilla planilla;
 
-    @OneToMany(mappedBy = "detalle_planilla")
+    @OneToMany(mappedBy = "detalle_planilla", cascade = CascadeType.PERSIST)
     private List<Desglose_Ajuste> desglose_ajustes = new ArrayList<Desglose_Ajuste>();
 
 
@@ -215,7 +216,10 @@ public class Detalle_Planilla implements Serializable {
     }
 
     public void setDesglose_ajustes(Desglose_Ajuste desglose_ajustes) {
-        this.desglose_ajustes.add(desglose_ajustes);
+        if(desglose_ajustes != null) {
+            this.desglose_ajustes.add(desglose_ajustes);
+            desglose_ajustes.setDetalle_planilla(this);
+        }
     }
 
 

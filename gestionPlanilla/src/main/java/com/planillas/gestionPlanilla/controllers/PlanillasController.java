@@ -36,8 +36,6 @@ public class PlanillasController {
     @Autowired
     private IIncapacidadService incapacidadService;
 
-    private static final System.Logger logger = System.getLogger(PlanillasController.class.getName());
-
     @GetMapping("/")
     public String index(Model model) {
 
@@ -55,8 +53,6 @@ public class PlanillasController {
             model.addAttribute("mensaje", "No hay planillas para mostrar");
         }
         //* Planilla del mes
-        
-        // logger.log(System.Logger.Level.INFO, "Planilla del mes: " + planillaDelMes.toString());
         model.addAttribute("planillaDelMes", planillaDelMes);
         
         if(planillaDelMes == null) {
