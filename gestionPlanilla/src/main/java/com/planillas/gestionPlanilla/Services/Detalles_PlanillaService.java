@@ -69,14 +69,20 @@ public class Detalles_PlanillaService implements IDetalles_PlanillaService {
         List<IncapacidadDTO> incapacidades = incapacidadService.obtenerIncapacidadesPorMesActual(mesAnterior);
         List<PermisoDTO> permisos = permisosService.obtenerPermisosMesAnterior(mesAnterior);
         List<Ajuste_Salarial> ajustes = ajusteService.obtenerAjustesSalariales();
+        if(ajustes != null || !ajustes.isEmpty()) {
+            List<Ajuste_Salarial> deducciones = ajustes.stream().filter(a -> a.isEs_deduccion()).collect(Collectors.toList());
+        }
+        else {
+            return -1; //! No existen ajustes
+        }
         List<Empleado> empleados = empleadoService.listarEmpleadosId();
         final int diasTrabajadosDefault = 20;
 
 
         if (empleados == null || empleados.isEmpty()) {
-            logger.log(Level.WARNING, "No existen empleados para procesar.");
-            return -1; //* No existen empleados
+            return -2; //! No existen empleados
         }
+
         for (Empleado empleado : empleados) {
             Detalle_Planilla detalle = new Detalle_Planilla(empleado, planilla);
             int diasIncapacidad = 0;
@@ -89,14 +95,14 @@ public class Detalles_PlanillaService implements IDetalles_PlanillaService {
 
             if (nombramiento != null) {
                 NombramientoInfoDTO infoNombramiento = nombramiento.get().getInfoNombramiento();
-                
+
                 // ? Se asigna el salario global o compuesto
                 if (infoNombramiento.isEs_SalarioGlobal()) {
                     detalle.setSalario(infoNombramiento.getSalario_global());
                 } else {
                     detalle.setSalario(infoNombramiento.getSalario_base());
                 }
-                
+
                 //* PERMISOS
                 Stream<PermisoDTO> permisosEmpleado = permisos.stream()
                 .filter(p -> p.getEmpleadoId().equals(empleado.getEmpleadoId()));
@@ -106,13 +112,13 @@ public class Detalles_PlanillaService implements IDetalles_PlanillaService {
                     List<PermisoDTO> permisosEmpleadoSinGoce = permisosEmpleado.filter(p -> !p.isGoce_salario()).collect(Collectors.toList());
                     if(permisosEmpleadoSinGoce != null && !permisosEmpleadoSinGoce.isEmpty()) {
                         diasPermisos = ausenciasService.calcularAusencias(permisosEmpleadoSinGoce, fechaActual);
-                        detalle.setDias_trabajados(diasTrabajadosDefault - diasPermisos);    
+                        detalle.setDias_trabajados(diasTrabajadosDefault - diasPermisos);
                         double salarioPorDias = detalle.getSalario() / detalle.getDias_trabajados();
-                        detalle.setSalario(salarioPorDias);  
+                        detalle.setSalario(salarioPorDias);
                     }
-                } 
+                }
 
-                //* INCAPACIDADES 
+                //* INCAPACIDADES
                 List<IncapacidadDTO> incapacidadEmpleado = incapacidades.stream()
                 .filter(i -> i.getEmpleadoId().equals(empleado.getEmpleadoId()))
                 .collect(Collectors.toList());
@@ -124,37 +130,53 @@ public class Detalles_PlanillaService implements IDetalles_PlanillaService {
                     double subsidio = incapacidadService.calcularSubsidio(diasIncapacidad, detalle.getSalario(), diasTrabajadosDefault);
                     detalle.setSubsidio(subsidio);
                 }
+                double salarioBase = detalle.getSalario();
+                salarioBruto = salarioBase;
 
                 //TODO: Se debe validar que el salario sea compuesto para aplicar los bonos
-                if (ajustes != null && !ajustes.isEmpty()) {
-
-                    double salarioBase = detalle.getSalario();
-
-                    Stream<Ajuste_Salarial> bonificaciones = ajustes.stream().filter(a -> !a.isEs_deduccion());
-                    List<Ajuste_Salarial> deducciones = ajustes.stream().filter(a -> a.isEs_deduccion()).collect(Collectors.toList());
-
-                    salarioBruto = salarioBase;
+                if (!ajustes.isEmpty() && !infoNombramiento.isEs_SalarioGlobal()) {
+                    List<Ajuste_Salarial> bonificaciones = ajustes.stream().filter(a -> !a.isEs_deduccion()).collect(Collectors.toList());
 
                     // * BONIFICACIONES
-                    Ajuste_Salarial escalafon = bonificaciones
-                            .filter(a -> a.getCategoria() == infoNombramiento.getCategoria() && a.getEstado().equals("ACT") && a.getDescripcion().contains("Escalafón"))
-                            .findFirst()
-                            .orElse(null);
+                    //? Valida que hayan bonificaciones
+                    if(!bonificaciones.isEmpty() && bonificaciones != null) {
 
+                        //? Itera sobre las bonificaciones
+                        for(Ajuste_Salarial bono : bonificaciones) {
+                            //? Valida que la bonificación se encuentre activa
+                            if(bono.getEstado().equals("ACT")) {
+                                //? Valida que tenga la misma categoría o que sea anualidad
+                                //? Se hace la validación con anualidad porque la anualidad no depende de la categoría por lo que siempre se debe calcular
+                               if((bono.getCategoria() == infoNombramiento.getCategoria()) || bono.getDescripcion().contains("Anualidad")) {
+                                Desglose_Ajuste desgloseBono;
 
-                    if (escalafon != null) {
-                        double valorEscalafon = ajusteService.calcularPorcentaje(escalafon.getValor(), salarioBase);
-                        Desglose_Ajuste desgloseEscalafon = new Desglose_Ajuste();
-                        desgloseEscalafon.setAjuste_salarial(escalafon);
-                        desgloseEscalafon.setDetalle_planilla(detalle);
-                        desgloseEscalafon.setMonto(valorEscalafon);
-                        desgloseEscalafon.setObservaciones("Bonificación por escalafón");
+                                    //? Valida que la bonificación sea por anualidad
+                                    if(bono.getDescripcion().contains("Anualidad")) {
+                                        
+                                        //? Se obtiene el tiempo de servicio del empleado
+                                        long aniosCompletos = empleado.getAniosLaborados();
+                                        
+                                        //? Se calcula la bonificación por anualidad
+                                        desgloseBono = ajusteService.calcularBonificacion(bono, salarioBase, aniosCompletos);
+                                    }
+                                    else {
+                                        desgloseBono = ajusteService.calcularBonificacion(bono, salarioBase);
+                                    }
+                                    desgloseBono.setDetalle_planilla(detalle);
+                                    desgloseBono.setAjuste_salarial(bono);
+                                    desgloseBono.setObservaciones("Bonificación por " + bono.getDescripcion());
 
-                        detalle.setDesglose_ajustes(desgloseEscalafon);
+                                    detalle.setDesglose_ajustes(desgloseBono);
+                                    salarioBruto += desgloseBono.getMonto();
+                                }
+                            }
+                        }
                     }
-
-                    detallesDao.save(detalle);
                 }
+                detalle.setSalario_bruto(salarioBruto);
+
+                // TODO: DEDUCCIONES
+                detallesDao.save(detalle);
             }
         }
         return 1;

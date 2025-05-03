@@ -24,7 +24,7 @@ public class Desglose_Ajuste implements Serializable {
     private long desgloseAjusteId;
 
     @NotNull
-    @Min(value = 1)
+    @Min(value = 0)
     private double monto;
 
     @NotNull

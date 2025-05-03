@@ -3,6 +3,7 @@ package com.planillas.gestionPlanilla.Models;
 import java.io.Serializable;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -226,6 +227,25 @@ public class Empleado implements Serializable {
 
     public void setDetalles_planilla(List<Detalle_Planilla> detalles_planilla) {
         this.detalles_planilla = detalles_planilla;
+    }
+
+    public long getAniosLaborados() {
+        //? Calcula los anios que tiene por cada nombramiento
+        long aniosCompletos = 0;
+        for(Nombramiento nombramientoEmpleado : nombramientos) {
+            LocalDate fechaActual = LocalDate.now();
+            LocalDate fechaInicio = nombramientoEmpleado.getFecha_inicio();
+            LocalDate fechaFin = nombramientoEmpleado.getFecha_fin();
+            
+            if(fechaFin == null) {
+                aniosCompletos += ChronoUnit.YEARS.between(fechaInicio, fechaActual);
+            }
+            else {
+                aniosCompletos += ChronoUnit.YEARS.between(fechaInicio, fechaFin);
+            }
+        }
+
+        return aniosCompletos;
     }
 
 

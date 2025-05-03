@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 package com.planillas.gestionPlanilla.Services;
 
 import java.util.List;
@@ -12,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.planillas.gestionPlanilla.DAO.IAjustesSalarialesDAO;
 import com.planillas.gestionPlanilla.Models.Ajuste_Salarial;
+import com.planillas.gestionPlanilla.Models.Desglose_Ajuste;
 
 /**
  *
@@ -19,7 +19,7 @@ import com.planillas.gestionPlanilla.Models.Ajuste_Salarial;
  */
 @Service
 public class AjustesService implements IAjustesService {
-    
+
     @Autowired
     private IAjustesSalarialesDAO ajustesSalariales;
 
@@ -31,6 +31,32 @@ public class AjustesService implements IAjustesService {
     @Override
     public double calcularPorcentaje(double porcentaje, double salarioBase) {
         return (porcentaje / 100) * salarioBase;
-    } 
+    }
 
+    @Override
+    public Desglose_Ajuste calcularBonificacion(Ajuste_Salarial ajuste, double salarioBase) {
+        double valorBonificacion = 0;
+        Desglose_Ajuste desglose = new Desglose_Ajuste();
+        if (!ajuste.isEs_valor()) {
+            valorBonificacion = calcularPorcentaje(ajuste.getValor(), salarioBase);
+        } else {
+            valorBonificacion = ajuste.getValor();
+        }
+        desglose.setMonto(valorBonificacion);
+        return desglose;
+    }
+
+    @Override
+    public Desglose_Ajuste calcularBonificacion(Ajuste_Salarial ajuste, double salarioBase, long aniosLaborados) {
+        double valorBonificacion = 0;
+        Desglose_Ajuste desglose = new Desglose_Ajuste();
+        if (!ajuste.isEs_valor()) {
+            double montoPorcentaje = calcularPorcentaje(ajuste.getValor(), salarioBase);
+            valorBonificacion = montoPorcentaje * aniosLaborados;
+        } else {
+            valorBonificacion = ajuste.getValor() * aniosLaborados;
+        }
+        desglose.setMonto(valorBonificacion);
+        return desglose;
+    }
 }

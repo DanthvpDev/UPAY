@@ -125,5 +125,5 @@ public class Nombramiento implements Serializable {
         return nombramientoInfo;
     }
 
-
+    
 }
