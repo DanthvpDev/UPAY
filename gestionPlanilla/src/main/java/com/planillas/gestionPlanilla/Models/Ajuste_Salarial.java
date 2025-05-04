@@ -52,9 +52,10 @@ public class Ajuste_Salarial implements Serializable {
     @Min(value = 1, message = "El valor del ajuste debe ser mayor a 0.")
     private double valor;
     
-    @Min(value = 1, message = "El porcentaje del ajuste debe ser mayor a 0.")
+    @Min(value = 0, message = "El porcentaje del ajuste debe un número positivo.")
     @Max(value = 3, message = "El porcentaje del ajuste debe ser menor a 2.")
-    private int categoria;
+    @Column(nullable = true)
+    private Integer categoria;
 
     @NotNull(message = "El estado del ajuste es obligatorio.")
     @Pattern(regexp = "ACT|INA", message = "El estado del ajuste solo puede ser activo o inactivo.")
@@ -154,11 +155,11 @@ public class Ajuste_Salarial implements Serializable {
         this.valor = valor;
     }
 
-    public int getCategoria() {
+    public Integer getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(int categoria) {
+    public void setCategoria(Integer categoria) {
         this.categoria = categoria;
     }
 

@@ -91,12 +91,12 @@ public class Detalle_Planilla implements Serializable {
         this.planilla = planilla;
         this.empleado = empleado;
         this.dias_trabajados = dias_trabajados;
-        this.primer_pago = 1;
-        this.segundo_pago = 1;
-        this.salario = 1;
+        this.primer_pago = 0;
+        this.segundo_pago = 0;
+        this.salario = 0;
         this.salario_neto = 0;
-        this.salario_bruto = 2;
-        this.renta_total = 1;
+        this.salario_bruto = 0;
+        this.renta_total = 0;
         this.fecha_pago1 = LocalDate.now();
         this.fecha_pago2 = LocalDate.now();
     }
@@ -104,12 +104,12 @@ public class Detalle_Planilla implements Serializable {
     public Detalle_Planilla(Empleado empleado, Planilla planilla) {
         this.planilla = planilla;
         this.empleado = empleado;
-        this.primer_pago = 1;
-        this.segundo_pago = 1;
-        this.salario = 1;
+        this.primer_pago = 0;
+        this.segundo_pago = 0;
+        this.salario = 0;
         this.salario_neto = 0;
-        this.salario_bruto = 2;
-        this.renta_total = 1;
+        this.salario_bruto = 0;
+        this.renta_total = 0;
         this.fecha_pago1 = LocalDate.now();
         this.fecha_pago2 = LocalDate.now();
     }

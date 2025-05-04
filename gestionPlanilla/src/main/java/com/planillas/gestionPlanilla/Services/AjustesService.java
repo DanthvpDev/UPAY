@@ -34,15 +34,15 @@ public class AjustesService implements IAjustesService {
     }
 
     @Override
-    public Desglose_Ajuste calcularBonificacion(Ajuste_Salarial ajuste, double salarioBase) {
-        double valorBonificacion = 0;
+    public Desglose_Ajuste calcularAjuste(Ajuste_Salarial ajuste, double salario) {
+        double montoAjuste = 0;
         Desglose_Ajuste desglose = new Desglose_Ajuste();
         if (!ajuste.isEs_valor()) {
-            valorBonificacion = calcularPorcentaje(ajuste.getValor(), salarioBase);
+            montoAjuste = calcularPorcentaje(ajuste.getValor(), salario);
         } else {
-            valorBonificacion = ajuste.getValor();
+            montoAjuste = ajuste.getValor();
         }
-        desglose.setMonto(valorBonificacion);
+        desglose.setMonto(montoAjuste);
         return desglose;
     }
 

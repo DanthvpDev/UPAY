@@ -12,6 +12,6 @@ import com.planillas.gestionPlanilla.Models.Desglose_Ajuste;
 public interface IAjustesService {
     public List<Ajuste_Salarial> obtenerAjustesSalariales();
     public double calcularPorcentaje(double valor, double salarioBase);
-    public Desglose_Ajuste calcularBonificacion(Ajuste_Salarial ajuste, double salarioBase);
+    public Desglose_Ajuste calcularAjuste(Ajuste_Salarial ajuste, double salarioBase);
     public Desglose_Ajuste calcularBonificacion(Ajuste_Salarial ajuste, double salarioBase, long aniosLaborados);
 }
