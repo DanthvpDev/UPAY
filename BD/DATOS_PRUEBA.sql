@@ -5,6 +5,7 @@ GO
 
 INSERT INTO EMPLEADOS (ID, NOMBRE, APELLIDO_1, APELLIDO_2, CORREO, TELEFONO, FECHA_NACIMIENTO)
 VALUES
+('505670901', 'Elena', 'Mora', 'Fernández', 'elena.mora@example.com', '88112233', '1995-12-05'),
 (
     '301410001',      -- ID (Cédula simulada: 301410001)
     'Ana',          -- Nombre
@@ -29,9 +30,11 @@ VALUES
 ('LICI', 3, 2, 1),
 ('MAES', 4, 2, 1)
 
-
 INSERT INTO CARRERA_PROFESIONAL (NOMBRE_CERT, NOMBRE_INSTITUCION, ANIO, EMPLEADO_ID, GRADO_ID)
 VALUES
+('Bachillerato en Educación', 'Universidad Nacional', 2016, '505670901', 3),
+('Licenciatura en Educación', 'Universidad de Costa Rica', 2018, '505670901', 4),
+('Maestría en Gestión Educativa', 'Universidad Estatal a Distancia', 2021, '505670901', 5),
 (
     'Bachillerato en Administración de Empresas', -- Nombre del certificado/título
     'Universidad de Costa Rica', -- Nombre de la institución
@@ -56,8 +59,12 @@ VALUES
 ('Ingeniero de Software', 850000.00, 960000.00, 2, 'INA'),
 ('Coordinador de Proyectos', 950000.00, 1050000.00, 2, 'ELM');
 
+select * from PUESTOS
+
 INSERT INTO NOMBRAMIENTOS (FECHAI_NOMBRAMIENTO, FECHAF_NOMBRAMIENTO, ESTADO, ES_SALARIOGLOBAL, EMPLEADO_ID, PUESTO_ID)
 VALUES 
+('2020-02-01', '2022-01-31', 'INA', 0, '505670901', 1), -- Asistente Administrativo
+('2022-02-01', NULL, 'ACT', 0, '505670901', 4),
 (GETDATE() + 1, NULL, 'ACT', 1, '123456789', 2),
 (
     GETDATE() + 1,        -- Fecha de inicio del nombramiento (fecha actual)
@@ -98,5 +105,18 @@ GO
 
 INSERT INTO PENSIONES(MONTO, FECHA_INICIO, FECHA_FIN, ESTADO, EMPLEADO_ID)
 VALUES
+(150000, '20250329', NULL, 'ACT', '108965478'),
 (150000, '20240226', NULL, 'ACT', '123456789')
 
+
+INSERT INTO TOPES_RENTA (monto_tope, monto_base, anio, porcentaje, ESTADO) VALUES
+(922000, 0, 2025, 0, 'ACT'),
+(1363000, 922001, 2025, 10, 'ACT'),
+(2387000, 1363001, 2025, 15, 'ACT'),
+(4773000, 2387001, 2025, 20, 'ACT'),
+(9999999999, 4773001, 2025, 25, 'ACT');
+
+INSERT INTO PERMISOS(DESCRIPCION, GOCE_SALARIO, FECHA_INICIO, FECHA_FIN, ESTADO, EMPLEADO_ID)
+VALUES
+('Permiso de estudios con goce de salario', 1, '2025-01-15', '2025-07-15', 'APR', '505670901'),
+('Permiso por asuntos personales sin goce de salario', 0, '2025-02-10', '2026-02-10', 'APR', '301410001')

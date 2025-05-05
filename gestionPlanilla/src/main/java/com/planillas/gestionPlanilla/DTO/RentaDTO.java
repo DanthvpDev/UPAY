@@ -5,6 +5,8 @@
 
 package com.planillas.gestionPlanilla.DTO;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author danth
@@ -17,10 +19,10 @@ public class RentaDTO {
     public RentaDTO() {
     }
 
-    public RentaDTO(double monto_base, double monto_top, double porcentaje) {
-        this.monto_base = monto_base;
-        this.monto_top = monto_top;
-        this.porcentaje = porcentaje;
+    public RentaDTO(BigDecimal monto_base, BigDecimal monto_top, BigDecimal porcentaje) {
+        this.monto_base = monto_base.doubleValue();
+        this.monto_top = monto_top.doubleValue();
+        this.porcentaje = porcentaje.doubleValue();
     }
 
     public void setMonto_base(double monto_base) {

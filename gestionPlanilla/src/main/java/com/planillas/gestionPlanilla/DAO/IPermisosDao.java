@@ -20,7 +20,7 @@ import com.planillas.gestionPlanilla.Models.Permiso;
  */
 public interface IPermisosDao extends CrudRepository<Permiso, Long> {
     //? Permisos
-    @Query(value = "SELECT EMPLEADO_ID, FECHA_INICIO, FECHA_FIN FROM PERMISOS WHERE (MONTH(FECHA_INICIO) = MONTH(:mesAnterior) OR MONTH(FECHA_FIN) = MONTH(:mesAnterior)) AND (YEAR(FECHA_INICIO) = YEAR(:mesAnterior) OR YEAR(FECHA_FIN) = YEAR(:mesAnterior))", nativeQuery = true)
+    @Query(value = "SELECT EMPLEADO_ID, FECHA_INICIO, FECHA_FIN, GOCE_SALARIO FROM PERMISOS WHERE FECHA_INICIO <= EOMONTH(:mesAnterior) AND FECHA_FIN >= DATEFROMPARTS(YEAR(:mesAnterior), MONTH(:mesAnterior), 1)", nativeQuery = true)
     public Iterable<PermisoDTO> findByMes(@Param("mesAnterior") LocalDate mesAnterior);
 
 }

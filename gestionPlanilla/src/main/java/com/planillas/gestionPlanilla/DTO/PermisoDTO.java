@@ -18,7 +18,7 @@ public class PermisoDTO extends AusenciasDTO {
     public PermisoDTO() {
     }
 
-    public PermisoDTO(String empleadoId, Date fechaFin, Date fechaInicio, boolean goce_salario) {
+    public PermisoDTO(String empleadoId, Date fechaInicio, Date fechaFin, boolean goce_salario) {
         super(empleadoId, fechaInicio, fechaFin);
         this.goce_salario = goce_salario;
     }

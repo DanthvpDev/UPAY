@@ -144,7 +144,12 @@ public class Detalle_Planilla implements Serializable {
     }
 
     public void setSalario_neto(double salario_neto) {
-        this.salario_neto = salario_neto;
+        if(salario_neto > 0) {
+            this.salario_neto = salario_neto;
+        }
+        else {
+            this.salario_neto = 0;
+        }
     }
 
     public double getSalario_bruto() {

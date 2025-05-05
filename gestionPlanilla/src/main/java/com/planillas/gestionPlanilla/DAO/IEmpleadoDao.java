@@ -19,4 +19,7 @@ public interface IEmpleadoDao extends CrudRepository<Empleado, String> {
 
     @Query(value = "SELECT E.ID, E.NOMBRE, E.APELLIDO_1, E.APELLIDO_2, E.CORREO, E.TELEFONO, E.FECHA_NACIMIENTO, E.BORRADO FROM EMPLEADOS E INNER JOIN NOMBRAMIENTOS N ON E.ID = N.EMPLEADO_ID WHERE E.BORRADO = 0 AND N.ESTADO = 'ACT'", nativeQuery = true)
     public Iterable<Empleado> findAllEmpleadosNombramientos();
+
+    @Query(value = "SELECT E.ID FROM EMPLEADOS E INNER JOIN NOMBRAMIENTOS N ON E.ID = N.EMPLEADO_ID WHERE E.BORRADO = 0 AND N.ESTADO = 'ACT'", nativeQuery = true)
+    public Iterable<EmpleadoDTO> findAllEmpleadosIdNombrados();
 }
