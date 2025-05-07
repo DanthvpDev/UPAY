@@ -102,7 +102,6 @@ public class Detalles_PlanillaService implements IDetalles_PlanillaService {
             return -3; //! No existen topes de renta
         }
 
-        //TODO: Calcular Carrera Profesional como bonificación
         //TODO: Verificar que funcione para planillas extraordinarias
         //TODO: Hacer la vista donde se muestren los detalles
         //TODO: Implementar planilla aguinaldo y planilla salario escolar

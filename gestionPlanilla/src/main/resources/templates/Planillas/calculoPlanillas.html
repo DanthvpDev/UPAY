@@ -63,6 +63,11 @@
                 </form>
             </div>
         </section>
+        <section class="container mt-4" th:if="${mensaje != null and mensaje != ''}">
+            <div th:text="${mensaje}" class="alert alert-primary" role="alert">
+
+            </div>
+        </section>
     </main>
 </body>
 

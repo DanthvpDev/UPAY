@@ -86,9 +86,9 @@ public class PlanillasController {
         Planilla planilaCalculada = planillasService.calcularPlanilla(planilla);
         if(planilaCalculada == null) {
             model.addAttribute("mensaje", "Error al calcular la planilla");
-            return "redirect:/planillas/";
+            return "Planillas/calculoPlanillas";
         }
         model.addAttribute("mensaje", "Planilla calculada con éxito");
-        return "redirect:/planillas/";
+        return "Planillas/calculoPlanillas";
     }
 }
