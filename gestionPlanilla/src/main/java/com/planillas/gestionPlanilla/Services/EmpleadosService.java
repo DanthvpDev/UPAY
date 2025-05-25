@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.planillas.gestionPlanilla.DAO.IEmpleadoDao;
 import com.planillas.gestionPlanilla.DTO.EmpleadoDTO;
+import com.planillas.gestionPlanilla.DTO.InfoBaseNombramientoDTO;
 import com.planillas.gestionPlanilla.Models.Empleado;
 
 /**
@@ -28,5 +29,10 @@ public class EmpleadosService implements IEmpleadosService {
     @Override
     public List<Empleado> listarEmpleadosId() {
         return (List<Empleado>) empleadoDao.findAllEmpleadosNombramientos();
+    }
+
+    @Override
+    public List<InfoBaseNombramientoDTO> obtenerTodosNombramientos() {
+        return (List<InfoBaseNombramientoDTO>)empleadoDao.findAllEmpleadosInfo();
     }
 }

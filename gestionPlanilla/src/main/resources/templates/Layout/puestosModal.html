@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Listado Produtos</title>
+    <meta charset="UTF-8" />
+</head>
+
+<body>
+    <section th:fragment="modalPuestos">
+        <div class="modal" role="dialog" tabindex="-1" id="puestosModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Puestos</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <section class="modal-body" th:if="${puestos == null or puestos.isEmpty}">
+                        <div class="alert alert-info" role="alert">
+                            No existen puestos.
+                        </div>
+                    </section>
+                    <section class="modal-body" th:if="${puestos != null and !puestos.isEmpty}">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Puesto</th>
+                                    <th scope="col">Seleccionar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="item : ${puestos}">
+                                    <td th:text="${item.id}"></td>
+                                    <td th:text="${item.nombrePuesto}"></td>
+                                    <td>
+                                        <button class="btn btn-link" type="button" data-bs-dismiss="modal"
+                                            th:onclick="seleccionarPuesto([[item.id]], [[item.nombrePuesto]])">Seleccionar</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <section />
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

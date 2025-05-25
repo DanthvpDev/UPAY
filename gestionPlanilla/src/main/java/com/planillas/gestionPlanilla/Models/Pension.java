@@ -30,7 +30,7 @@ public class Pension implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
-    private int pensionId;
+    private long pensionId;
 
     @NotNull(message = "Debe ingresar un monto.")
     @Min(value = 1, message = "El monto no puede ser un valor negativo ni 0")

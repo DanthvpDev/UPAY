@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="Layout/plantilla :: head"></head>
+
+<body>
+    <header th:replace="Layout/plantilla:: menu"></header>
+    <main>
+        <section class="mt-5">
+            <h1 class="text-center">Agregar nuevo nombramiento</h1>
+        </section>
+        <section class="mt-5 container">
+            <form th:object="${nombramiento}" method="post" th:action="@{/nombramientos/agregar}">
+                <input type="hidden" name="id" th:field="*{id}">
+                <div class="row">
+                    <div class="mb-3 col-6">
+                        <input type="hidden" name="id_empleado" th:field="*{id_empleado}">
+                        <label for="nombre_completo" class="form-label">Empleado</label>
+                        <div class="input-group">
+                            <input type="text" th:field="*{nombre_completo}" class="form-control" id="nombre_completo"
+                                aria-describedby="nombreCompleto" placeholder="Nombre Completo"/>
+                            <button type="button" class="btn btn-primary">
+                                <i class="fa-solid fa-user"></i>
+                            </button>
+                        </div>
+                        <span th:errors="*{nombre_completo}" class="form-text text-danger"></span>
+                    </div>
+                    <div class="mb-3 col-6">
+                        <input type="hidden" name="puesto_id" th:field="*{puesto_id}">
+                        <label for="puesto" class="form-label">Puesto</label>
+                        <div class="input-group">
+                            <input type="text" th:field="*{puesto}" class="form-control" id="puesto"
+                                aria-describedby="puesto" placeholder="Puesto"/>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#puestosModal">
+                                <i class="fa-solid fa-user"></i>
+                            </button>
+                        </div>
+                        <span th:errors="*{puesto}" class="form-text text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <label for="fecha_inicio" class="form-label">Fecha Inicio</label>
+                        <input type="date" class="form-control" id="fecha_inicio" th:field="*{fecha_inicio}" th:value="${nombramiento.fecha_inicio != null ? #temporals.format(nombramiento.fecha_inicio, 'yyyy-MM-dd') : ''}" />
+                        <span class="form-text text-danger" th:errors="*{fecha_inicio}"></span>
+                    </div>
+                    <div class="col-6">
+                        <label for="fecha_fin" class="form-label">Fecha Fin</label>
+                        <input type="date" class="form-control" id="fecha_fin" th:field="*{fecha_fin}" />
+                        <span class="form-text text-danger" th:errors="*{fecha_fin}"></span>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success mt-5">Guardar</button>
+            </form>
+        </section>
+        <section th:replace="Layout/puestosModal :: modalPuestos"></section>
+    </main>
+</body>
+
+</html>

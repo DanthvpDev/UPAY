@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="Layout/plantilla :: head"></head>
+
+<body>
+    <header th:replace="Layout/plantilla:: menu"></header>
+    <main>
+        <section class="mt-5">
+            <h1 class="text-center">Nombramientos</h1>
+        </section>
+        <section class="container my-5">
+            <a th:href="@{/nombramientos/agregar}" class="btn btn-success">Nuevo</a>
+        </section>
+        <section class="container mt-5" th:if="${nombramientos == null or nombramientos.isEmpty}">
+            <div class="alert alert-primary" role="alert">
+                <p>No existen nombramientos activos.</p>
+            </div>
+        </section>
+        <section class="container mt-5" th:if="${nombramientos != null and !nombramientos.isEmpty}">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Fecha Inicio</th>
+                        <th scope="col">Fecha Fin</th>
+                        <th scope="col">Puesto</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="item : ${nombramientos}">
+                        <td th:text="${item.id}"></td>
+                        <td th:text="${item.nombre_completo}"></td>
+                        <td th:text="${item.fecha_inicio}"></td>
+                        <td th:text="${item.fecha_fin}"></td>
+                        <td th:text="${item.puesto}"></td>
+                        <td>
+                            <a><i class="fa-solid fa-plus text-primary"></i></a>
+                            <a><i class="fa-solid fa-pen-to-square text-info"></i></a>
+                            <a><i class="fa-solid fa-trash text-warning"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+</body>
+
+</html>

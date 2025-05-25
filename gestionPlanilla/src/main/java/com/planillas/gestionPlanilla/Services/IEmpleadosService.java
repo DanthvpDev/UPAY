@@ -8,6 +8,7 @@ package com.planillas.gestionPlanilla.Services;
 import java.util.List;
 
 import com.planillas.gestionPlanilla.DTO.EmpleadoDTO;
+import com.planillas.gestionPlanilla.DTO.InfoBaseNombramientoDTO;
 import com.planillas.gestionPlanilla.Models.Empleado;
 
 /**
@@ -16,4 +17,5 @@ import com.planillas.gestionPlanilla.Models.Empleado;
  */
 public interface IEmpleadosService {
     public List<Empleado> listarEmpleadosId();
+    public List<InfoBaseNombramientoDTO> obtenerTodosNombramientos();
 }
